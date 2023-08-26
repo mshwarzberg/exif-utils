@@ -1,10 +1,10 @@
 {
-  "name": "node-exiftool",
+  "name": "exif-utils",
   "version": "0.1.0",
   "description": "This library is designed to read and write exif data to compatible files",
   "main": "index.js",
   "scripts": {
-    "test": "mocha ./test/test.js",
+    "test": "npm run build && mocha ./test/test.js",
     "build": "tsc"
   },
   "author": "Mendel Shwarzberg <mendelshwarzberg@gmail.com>",

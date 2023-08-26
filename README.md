@@ -5,10 +5,10 @@ ExifTool Node is a Node.js library that provides a convenient interface for work
 
 ## Installation
 
-You can install ExifTool Node using npm:
+You can install exif-utils in Node using npm:
 
 ```bash
-npm install exiftool-node
+npm install exif-utils
 ```
 
 ## Usage
@@ -16,7 +16,7 @@ npm install exiftool-node
 ### Importing the library
 
 ```javascript
-const ExifTool = require('exiftool-node');
+const ExifTool = require('exif-utils');
 ```
 
 ### Initialize ExifTool
