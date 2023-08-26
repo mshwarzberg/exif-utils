@@ -1,6 +1,6 @@
 const { execSync } = require("child_process");
-
-const exiftoolPath = './resources/exiftool.exe';
+const path = require("path");
+const exiftoolPath = path.join(__dirname, '../resources/exiftool.exe');
 
 export default function readMetadata(filePath: string): Record<string, any> {
     const command = `"${exiftoolPath}" -j "${filePath}"`;
