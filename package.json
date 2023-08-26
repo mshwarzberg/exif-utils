@@ -1,12 +1,13 @@
 {
   "name": "exif-utils",
-  "version": "0.1.3",
+  "version": "0.1.41",
   "description": "This library is designed to read and write exif data to compatible files",
   "main": "dist/index.js",
   "scripts": {
     "test": "npm run build && mocha ./test/test.js",
     "build": "tsc"
   },
+  "keywords": ["exif", "utility", "helper", "metadata"],
   "author": "Mendel Shwarzberg <mendelshwarzberg@gmail.com>",
   "license": "MIT",
   "files": ["dist", "src", "resources"],
