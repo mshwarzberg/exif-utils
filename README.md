@@ -11,32 +11,6 @@ You can install ExifTool Node using npm:
 npm install exiftool-node
 ```
 
-## Usage
-
-### Importing the library
-
-```javascript
-const ExifTool = require('exiftool-node');
-```
-
-### Initialize ExifTool
-
-```javascript
-const exiftool = new ExifTool();
-```
-
-### Extract Exif Metadata
-
-```javascript
-exiftool.extractMetadata('path/to/your/file.jpg')
-  .then(metadata => {
-    console.log(metadata);
-  })
-  .catch(error => {
-    console.error('Error:', error);
-  });
-```
-
 # Test
 
 To test run "npm run build" then run "npm test"
