@@ -1,33 +1,45 @@
-```markdown
 # ExifUtil Node
 
-ExifUtil is a Node.js library that provides a convenient interface for working with Exif metadata in files. It allows you to extract, modify, and manipulate Exif data in various file formats, including images and multimedia files.
+**ExifUtil** is a powerful Node.js library designed for seamless handling of Exif metadata within various file formats, including images and multimedia files. It provides a convenient interface for tasks such as extracting, modifying, and manipulating Exif data.
 
-**Note**: Currently, ExifUtil Node is supported on Windows only.
+## Source
+
+You can find the source code for ExifUtil on GitHub: [GitHub Repository](https://github.com/mshwarzberg/exif-utils)
+
+Please note that as of now, ExifUtil is compatible with the Windows operating system only.
 
 ## Installation
 
-You can install exif-utils in Node using npm: npm install exif-utils
+You can easily install ExifUtil in your Node.js project using npm:
 
-## Usage
-
-```javascript
-const { ExifUtil } = require('exif-utils');
-const exifUtil = new ExifUtil("/path/to/your/file");
+```bash
+npm install exif-utils
 ```
 
-### Extract Exif Metadata
+## Example Usage
+
+Here's an example of how to use ExifUtil in your Node.js application:
 
 ```javascript
-const json = await exifUtil.readMetadata() // exifUtil.readMetadataSync();
-// do something with the json
+import { ExifUtils } from "exif-utils";
+
+// Alternatively, using require:
+// const { ExifUtils } = require("exif-utils");
+
+const exifUtil = new ExifUtils("path/to/your/file");
+const jsonReader = exifUtil.jsonReader();
+const json = jsonReader.readSync(); // or jsonReader.readAsync();
+// Perform operations with the extracted JSON data
 ```
 
-# Test
+## Testing
 
-To test, run "npm run build" then run "npm test"
+To run tests for ExifUtil, use the following command:
+
+```bash
+npm test
+```
 
 ## License
 
 This project is licensed under the [MIT License](https://mit-license.org/).
-```
