@@ -1,6 +1,6 @@
 {
   "name": "exif-utils",
-  "version": "0.1.5",
+  "version": "0.1.51",
   "description": "This library is designed to read and write exif data to compatible files",
   "main": "dist/src/index.js",
   "scripts": {
