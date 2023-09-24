@@ -1,41 +1,33 @@
-import { ExifUtil } from "..";
-import { Reader } from "./reader";
+import ExifUtil, { execAsync, execSync } from "..";
+import { DataType, ProcessOutput } from "../types";
+import Reader from "./reader";
 
-const util = require("util");
-const execAsync = util.promisify(require("child_process").exec);
-const { execSync } = require("child_process");
-
-export class JsonReader extends Reader {
-
+export default class JSONReader extends Reader {
     constructor(exifUtil: ExifUtil) {
-        super(exifUtil)
+        super(exifUtil, DataType.JSON)
     }
 
     /**
-     * @asynchronous This reads a file's or folder's content metadata. 
-     * @returns json of the exif data or json with a single element of key "error" and value of the error message
+     * @override {@link Reader.readAsync}
+     * @returns A {@link Promise} that resolves with json or an Object with a single element containing an error result
      */
     async readAsync(): Promise<Record<string, any>> {
-        const command = `"${ExifUtil.exifUtilPath}" -json "${this.exifUtil.getScanPath()}"`;
         try {
-            const { stdout } = await execAsync(command);
-            const parsedResult = JSON.parse(stdout);
-            return parsedResult;
+            const result: ProcessOutput = await execAsync(this.getCMD());
+            return JSON.parse(result.stdout);
         } catch (error: any) {
             return [{ error: error.message }];
         }
     }
 
     /**
-     * @synchronous This reads a file's or folder's content metadata. 
-     * @returns json of the exif data or json with a single element of key "error" and value of the error message
+     * @override {@link Reader.readSync}
+     * @returns json or an Object containing single element containing an error result
      */
     readSync(): Array<Record<string, any>> {
-        const command = `"${ExifUtil.exifUtilPath}" -json "${this.exifUtil.getScanPath()}"`;
         try {
-            const result = execSync(command).toString();
-            const parsedResult = JSON.parse(result);
-            return parsedResult;
+            const result = execSync(this.getCMD()).toString();
+            return JSON.parse(result);
         } catch (error: any) {
             return [{ error: error.message }];
         }

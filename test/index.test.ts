@@ -1,4 +1,4 @@
-import { ExifUtil } from '../src/index';
+import ExifUtil from '../src/index';
 import { exifUtil, exifUtilPath, testImagePath } from './values';
 
 describe('Application Test', () => {
@@ -7,10 +7,10 @@ describe('Application Test', () => {
     });
     it("validates correct scan path", () => {
         const tempPath = "test path";
-        expect(exifUtil.getScanPath()).toBe(testImagePath);
-        exifUtil.setScanPath(tempPath);
-        expect(exifUtil.getScanPath()).toBe(tempPath);
-        exifUtil.setScanPath(testImagePath);
-        expect(exifUtil.getScanPath()).toBe(testImagePath);
+        expect(exifUtil.getPaths()).toStrictEqual([testImagePath]);
+        exifUtil.setPaths(tempPath);
+        expect(exifUtil.getPaths()).toStrictEqual([tempPath]);
+        exifUtil.setPaths(testImagePath);
+        expect(exifUtil.getPaths()).toStrictEqual([testImagePath]);
     });
 });

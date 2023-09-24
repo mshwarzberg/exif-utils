@@ -1,19 +1,17 @@
 import { exifUtil } from "../values";
 
 describe("should read json from test image", () => {
-    const jsonReader = exifUtil.jsonReader();
+    const JSONReader = exifUtil.jsonReader();
     it('should read json synchronously', () => {
-        const pngResult = jsonReader.readSync();
-        expect(pngResult[0].error).not.toBeDefined();
-        expect(pngResult[0].FileName).toBe('test.png');
-        expect(pngResult[0].MIMEType).toBe('image/png');
+        const result = JSONReader.readSync();
+        expect(result).toHaveLength(3);
+        expect(result[0].error).not.toBeDefined();
     });
 
     it('should read json asynchronously', async () => {
-        const pngResult = await jsonReader.readAsync();
-        expect(pngResult[0].error).not.toBeDefined();
-        expect(pngResult[0].FileName).toBe('test.png');
-        expect(pngResult[0].MIMEType).toBe('image/png');
+        const result = await JSONReader.readAsync();
+        expect(result).toHaveLength(3);
+        expect(result[0].error).not.toBeDefined();
     });
 
 })

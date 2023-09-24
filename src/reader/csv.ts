@@ -1,24 +1,19 @@
-import { ExifUtil } from "..";
-import { Reader } from "./reader";
-import util from 'util';
-import { execSync } from 'child_process';
+import ExifUtil, { execAsync, execSync } from "..";
+import { DataType } from "../types";
+import Reader from "./reader";
 
-const execAsync = util.promisify(require("child_process").exec);
-
-export class CSVReader extends Reader {
-
+export default class CSVReader extends Reader {
     constructor(exifUtil: ExifUtil) {
-        super(exifUtil)
+        super(exifUtil, DataType.CSV);
     }
 
     /**
-     * @asynchronous This reads a file's or folder's content metadata. 
-     * @returns csv of the exif data or an error message
+     * @override {@link Reader.readAsync}
+     * @returns A {@link Promise} that resolves with csv of the exif data or one with an error message
      */
     async readAsync(): Promise<string> {
-        const command = `"${ExifUtil.exifUtilPath}" -csv "${this.exifUtil.getScanPath()}"`;
         try {
-            const result = await execAsync(command);
+            const result = await execAsync(this.getCMD());
             return result.stdout;
         } catch (error: any) {
             return "error," + error.message;
@@ -26,13 +21,12 @@ export class CSVReader extends Reader {
     }
 
     /**
-     * @synchronous This reads a file's or folder's content metadata. 
-     * @returns json of the exif data or json with a single element of key "error" and value of the error message
+     * @override {@link Reader.readSync}
+     * @returns csv of the exif data or one with an error message
      */
     readSync(): string {
-        const command = `"${ExifUtil.exifUtilPath}" -csv "${this.exifUtil.getScanPath()}"`;
         try {
-            return execSync(command).toString();
+            return execSync(this.getCMD()).toString();
         } catch (error: any) {
             return "error," + error.message;
         }

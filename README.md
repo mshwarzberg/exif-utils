@@ -27,8 +27,8 @@ import { ExifUtils } from "exif-utils";
 // const { ExifUtils } = require("exif-utils");
 
 const exifUtil = new ExifUtils("path/to/your/file");
-const jsonReader = exifUtil.jsonReader();
-const json = jsonReader.readSync(); // or jsonReader.readAsync();
+const JSONReader = exifUtil.jsonReader();
+const json = JSONReader.readSync(); // or JSONReader.readAsync();
 // Perform operations with the extracted JSON data
 ```
 
