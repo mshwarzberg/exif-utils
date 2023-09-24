@@ -18,7 +18,7 @@ function validateOS() {
 
 validateOS();
 
-export default class ExifUtil {
+export class ExifUtil {
     /**
      * If one of the paths are invalid, extraction of metadata will fail.
      */

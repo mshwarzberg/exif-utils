@@ -1,4 +1,4 @@
-import ExifUtil from '../src/index';
+import { ExifUtil } from '../src/index';
 import { exifUtil, exifUtilPath, testImagePath } from './values';
 
 describe('Application Test', () => {

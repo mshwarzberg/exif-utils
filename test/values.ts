@@ -1,4 +1,4 @@
-import ExifUtil from "../src";
+import { ExifUtil } from "../src";
 import path from 'path';
 
 export const testImagePath = "./test/Test Files";

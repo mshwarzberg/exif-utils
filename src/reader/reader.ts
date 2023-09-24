@@ -1,4 +1,4 @@
-import ExifUtil from "..";
+import { ExifUtil } from "..";
 import { DataType } from "../types";
 
 /**

@@ -1,4 +1,4 @@
-import ExifUtil, { execAsync, execSync } from "..";
+import { ExifUtil, execAsync, execSync } from "..";
 import { DataType, ProcessOutput } from "../types";
 import Reader from "./reader";
 
