@@ -3,8 +3,9 @@ import { DataType } from "../types";
 import Reader from "./reader";
 
 export default class CSVReader extends Reader {
-    constructor(exifUtil: ExifUtil) {
-        super(exifUtil, DataType.CSV);
+    
+    constructor(exifUtil: ExifUtil, properties?: string[]) {
+        super(exifUtil, DataType.CSV, properties);
     }
 
     /**

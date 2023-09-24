@@ -4,8 +4,8 @@ import Reader from "./reader";
 
 export default class HTMLReader extends Reader {
 
-    constructor(exifUtil: ExifUtil) {
-        super(exifUtil, DataType.HTML)
+    constructor(exifUtil: ExifUtil, properties?: string[]) {
+        super(exifUtil, DataType.HTML, properties)
     }
 
     /**

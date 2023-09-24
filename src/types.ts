@@ -16,17 +16,18 @@ export interface ProcessOutput {
  * Enum representing the supported outputs by Exiftool.
  * @enum {string}
  *
- * @property {string} JSON - Represents JSON data format ("j"). Use this as an argument when interacting with Exiftool to specify JSON data type.
- * @property {string} HTML - Represents HTML data format ("h"). Use this as an argument when interacting with Exiftool to specify HTML data type.
- * @property {string} CSV - Represents CSV data format ("csv"). Use this as an argument when interacting with Exiftool to specify CSV data type.
- * @property {string} XML - Represents XML data format ("x"). Use this as an argument when interacting with Exiftool to specify XML data type.
- * @property {string} PHP - Represents PHP data format ("php"). Use this as an argument when interacting with Exiftool to specify PHP data type.
- * @property {string} TSV - Represents TSV (Tab-Separated Values) data format ("t"). Use this as an argument when interacting with Exiftool to specify TSV data type.
+ * @property JSON - Represents JSON data format ("j"). Use this as an argument when interacting with Exiftool to specify JSON data type.
+ * @property HTML - Represents HTML data format ("h"). Use this as an argument when interacting with Exiftool to specify HTML data type.
+ * @property CSV - Represents CSV data format ("csv"). Use this as an argument when interacting with Exiftool to specify CSV data type.
+ * @property XML - Represents XML data format ("x"). Use this as an argument when interacting with Exiftool to specify XML data type.
+ * @property PHP - Represents PHP data format ("php"). Use this as an argument when interacting with Exiftool to specify PHP data type.
+ * @property TSV - Represents TSV (Tab-Separated Values) data format ("t"). Use this as an argument when interacting with Exiftool to specify TSV data type.
  */
 export enum DataType {
     JSON = "j",
     HTML = "h",
     CSV = "csv",
+    // These three are currently not supported
     XML = "x",
     PHP = "php",
     TSV = "t"

@@ -1,6 +1,8 @@
-import CSVReader from "./reader/csv";
-import HTMLReader from "./reader/html";
-import JSONReader from "./reader/json";
+import CSVReader from "./read/csv";
+import HTMLReader from "./read/html";
+import JSONReader from "./read/json";
+import PropertyReader from "./read/property/reader";
+import { DataType } from "./types";
 
 const path = require("path");
 const os = require('os');
@@ -23,7 +25,7 @@ export class ExifUtil {
      * If one of the paths are invalid, extraction of metadata will fail.
      */
     private paths: string[];
-    
+
     /**
      * The absolute path representation of exiftool executable.
      */
@@ -38,6 +40,7 @@ export class ExifUtil {
     }
 
     /**
+     * Use this if you want to read all the properties of a file/folder contents.
      * @returns a new instance of {@link JSONReader}
      */
     public jsonReader(): JSONReader {
@@ -45,6 +48,7 @@ export class ExifUtil {
     }
 
     /**
+     * Use this if you want to read all the properties of a file/folder contents.
      * @returns a new instance of {@link CSVReader}
      */
     public csvReader(): CSVReader {
@@ -52,10 +56,35 @@ export class ExifUtil {
     }
 
     /**
+     * Use this if you want to read all the properties of a file/folder contents.
      * @returns a new instance of {@link HTMLReader}
      */
     public htmlReader(): HTMLReader {
         return new HTMLReader(this);
+    }
+
+    /**
+     * Use this if you want to read specific properties as json
+     * @returns a new instance of {@link PropertyReader}
+     */
+    public jsonPropertyReader(): PropertyReader {
+        return new PropertyReader(DataType.JSON, this);
+    }
+
+    /**
+     * Use this if you want to read specific properties as an html table
+     * @returns a new instance of {@link PropertyReader}
+     */
+    public htmlPropertyReader(): PropertyReader {
+        return new PropertyReader(DataType.HTML, this);
+    }
+
+    /**
+     * Use this if you want to read specific properties as csv
+     * @returns a new instance of {@link PropertyReader}
+     */
+    public csvPropertyReader(): PropertyReader {
+        return new PropertyReader(DataType.CSV, this);
     }
 
     /**

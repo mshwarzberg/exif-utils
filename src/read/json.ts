@@ -3,8 +3,9 @@ import { DataType, ProcessOutput } from "../types";
 import Reader from "./reader";
 
 export default class JSONReader extends Reader {
-    constructor(exifUtil: ExifUtil) {
-        super(exifUtil, DataType.JSON)
+    
+    constructor(exifUtil: ExifUtil, properties?: string[]) {
+        super(exifUtil, DataType.JSON, properties)
     }
 
     /**
