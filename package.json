@@ -1,6 +1,6 @@
 {
   "name": "exif-utils",
-  "version": "0.1.61",
+  "version": "0.1.7",
   "description": "This library is designed to read and write exif data to compatible files",
   "main": "dist/index.js",
   "scripts": {
@@ -11,7 +11,8 @@
     "exif",
     "utility",
     "helper",
-    "metadata"
+    "metadata",
+    "exiftool"
   ],
   "author": "Mendel Shwarzberg <mendelshwarzberg@gmail.com>",
   "license": "MIT",

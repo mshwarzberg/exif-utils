@@ -1,9 +1,9 @@
 import { ExifUtil } from '../src/index';
-import { exifUtil, exifUtilPath, testImagePath } from './values';
+import { exifUtil, exifToolPath, testImagePath } from './values';
 
 describe('Application Test', () => {
     it("validates exiftool location", () => {
-        expect(exifUtilPath).toBe(ExifUtil.exifUtilPath);
+        expect(exifToolPath).toBe(ExifUtil.exifToolPath);
     });
     it("validates correct scan path", () => {
         const tempPath = "test path";

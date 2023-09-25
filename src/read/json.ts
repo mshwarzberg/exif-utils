@@ -4,8 +4,8 @@ import Reader from "./reader";
 
 export default class JSONReader extends Reader {
     
-    constructor(exifUtil: ExifUtil, properties?: string[]) {
-        super(exifUtil, DataType.JSON, properties)
+    constructor(exifUtil: ExifUtil) {
+        super(exifUtil, DataType.JSON)
     }
 
     /**
@@ -25,7 +25,7 @@ export default class JSONReader extends Reader {
      * @override {@link Reader.readSync}
      * @returns json or an Object containing single element containing an error result
      */
-    readSync(): Array<Record<string, any>> {
+    readSync(): Record<string, any>[] {
         try {
             const result = execSync(this.getCMD()).toString();
             return JSON.parse(result);

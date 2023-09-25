@@ -24,11 +24,12 @@ export interface ProcessOutput {
  * @property TSV - Represents TSV (Tab-Separated Values) data format ("t"). Use this as an argument when interacting with Exiftool to specify TSV data type.
  */
 export enum DataType {
-    JSON = "j",
-    HTML = "h",
-    CSV = "csv",
+    DEFAULT = "",
+    JSON = "-j",
+    HTML = "-h",
+    CSV = "-csv",
     // These three are currently not supported
-    XML = "x",
-    PHP = "php",
-    TSV = "t"
+    XML = "-x",
+    PHP = "-php",
+    TSV = "-t"
 }

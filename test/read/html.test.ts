@@ -3,12 +3,12 @@ import { exifUtil } from "../values"
 describe("tests the html reader", () => {
     const htmlReader = exifUtil.htmlReader();
     it('should read html synchronously', () => {
-        const pngResult = htmlReader.readSync();        
-        // expect(pngResult.startsWith("error,")).not.toBeTruthy();
+        const result = htmlReader.readSync();        
+        expect(result.startsWith("table><tr><td>error</td><td>")).not.toBeTruthy();
     });
 
     it('should read html asynchronously', async () => {
-        const pngResult = await htmlReader.readAsync();
-        // expect(pngResult.startsWith("error,")).not.toBeTruthy();
+        const result = await htmlReader.readAsync();
+        expect(result.startsWith("table><tr><td>error</td><td>")).not.toBeTruthy();
     });
 })

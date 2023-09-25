@@ -1,15 +1,20 @@
 import CSVReader from "./read/csv";
+import DefaultReader from "./read/default";
 import HTMLReader from "./read/html";
 import JSONReader from "./read/json";
-import PropertyReader from "./read/property/reader";
-import { DataType } from "./types";
+import path from "path";
+import os from 'os';
+import util from "util";
+import { execSync } from "child_process";
+import child_process from 'child_process';
 
-const path = require("path");
-const os = require('os');
-const util = require("util");
-export const execAsync = util.promisify(require("child_process").exec);
-export const { execSync } = require("child_process");
+export const execAsync = util.promisify(child_process.exec);
+export { execSync };
 
+/**
+ * A (hopefully) temporary function that validates whether the current OS is windows
+ * (windows is the only OS currently supported)
+ */
 function validateOS() {
     const supportedOS = ["win32"];
 
@@ -20,6 +25,11 @@ function validateOS() {
 
 validateOS();
 
+/**
+ * This is intended to only be called once. 
+ * There is functionality to update the necessary properties to scan different locations,
+ * or to change the output format, etc.
+ */
 export class ExifUtil {
     /**
      * If one of the paths are invalid, extraction of metadata will fail.
@@ -27,9 +37,9 @@ export class ExifUtil {
     private paths: string[];
 
     /**
-     * The absolute path representation of exiftool executable.
+     * The absolute path representation of exiftool location.
      */
-    static exifUtilPath: string = path.join(__dirname, '../resources/exiftool.exe');
+    static exifToolPath: string = path.join(__dirname, '../resources/exiftool.exe');
 
     /**
      * @note paths can be overridden by using {@link setPaths}
@@ -40,7 +50,6 @@ export class ExifUtil {
     }
 
     /**
-     * Use this if you want to read all the properties of a file/folder contents.
      * @returns a new instance of {@link JSONReader}
      */
     public jsonReader(): JSONReader {
@@ -48,7 +57,6 @@ export class ExifUtil {
     }
 
     /**
-     * Use this if you want to read all the properties of a file/folder contents.
      * @returns a new instance of {@link CSVReader}
      */
     public csvReader(): CSVReader {
@@ -56,7 +64,6 @@ export class ExifUtil {
     }
 
     /**
-     * Use this if you want to read all the properties of a file/folder contents.
      * @returns a new instance of {@link HTMLReader}
      */
     public htmlReader(): HTMLReader {
@@ -64,31 +71,14 @@ export class ExifUtil {
     }
 
     /**
-     * Use this if you want to read specific properties as json
-     * @returns a new instance of {@link PropertyReader}
+     * @returns a new instance of {@link DefaultReader}
      */
-    public jsonPropertyReader(): PropertyReader {
-        return new PropertyReader(DataType.JSON, this);
+    public defaultReader(): DefaultReader {
+        return new DefaultReader(this);
     }
 
     /**
-     * Use this if you want to read specific properties as an html table
-     * @returns a new instance of {@link PropertyReader}
-     */
-    public htmlPropertyReader(): PropertyReader {
-        return new PropertyReader(DataType.HTML, this);
-    }
-
-    /**
-     * Use this if you want to read specific properties as csv
-     * @returns a new instance of {@link PropertyReader}
-     */
-    public csvPropertyReader(): PropertyReader {
-        return new PropertyReader(DataType.CSV, this);
-    }
-
-    /**
-     * This will update the paths of the instance of {@link ExifUtil}
+     * This will update the {@link paths} of the instance of {@link ExifUtil}
      * This is more preferable than creating a new instance entirely in the case of updating the paths.
      * @param paths a list of paths that are to be scanned.
      */
@@ -97,8 +87,7 @@ export class ExifUtil {
     }
 
     /**
-     * Get the array of paths.
-     * @returns {string[]} The array of file {@link paths} to extract metadata from.
+     * @returns {string[]} The array of files/folders {@link paths} to extract metadata from.
      */
     public getPaths(): string[] {
         return this.paths;
