@@ -3,7 +3,6 @@ import { exifUtil } from "../values"
 describe("Test whether the correct properties are returned and in the correct data type", () => {
     it("tests inclusion of properties", () => {
         const jsonReader = exifUtil.jsonReader();
-        expect(jsonReader.propertiesInclude).toHaveLength(0);
         // select the properties you want. Duplicates should be ignored
         jsonReader
             .withFileName()
@@ -12,7 +11,6 @@ describe("Test whether the correct properties are returned and in the correct da
             .withFileName();
 
         // validate that there are 3 selected properties
-        expect(jsonReader.propertiesInclude).toHaveLength(3);
         // read the data
         const json = jsonReader.readSync();
 
@@ -28,7 +26,6 @@ describe("Test whether the correct properties are returned and in the correct da
     });
     it("tests empty property reader", () => {
         const jsonReader = exifUtil.jsonReader();
-        expect(jsonReader.propertiesInclude).toHaveLength(0);
         const json = jsonReader.readSync() as Record<string, any>[];
         json.forEach((file) => {
             expect(file).toHaveProperty('SourceFile');
@@ -39,12 +36,10 @@ describe("Test whether the correct properties are returned and in the correct da
     });
     it("tests exclusion of properties", () => {
         const jsonReader = exifUtil.jsonReader();
-        expect(jsonReader.propertiesExclude).toHaveLength(0);
         jsonReader
             .withoutFileSize()
             .withoutMIMEType()
             .withoutDirectory();
-        expect(jsonReader.propertiesExclude).toHaveLength(3);
         const json = jsonReader.readSync();
         json.forEach(file => {
             expect(file).not.toHaveProperty("FileSize")

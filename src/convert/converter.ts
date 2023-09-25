@@ -61,4 +61,17 @@ export default class Converter {
         // add an extra row to match the csv returned by exiftool     
         return csvRows.join('\r\n') + "\r\n";
     }
+
+    static jsonToHtml(json: Record<string, any>[]): string {
+        return json.map(file => {
+            const keys = Object.keys(file);
+            let result = `<!-- ${file["SourceFile"]} -->\r\n<table>\r\n`;
+            for (const key of keys) {
+                if (key !== "SourceFile") {
+                    result += `<tr><td>${key.split("File").join("File ")}</td><td>${file[key]}</td></tr>\r\n`;
+                }
+            }
+            return result + "</table>";
+        }).join("\r\n") + "\r\n";
+    }
 }

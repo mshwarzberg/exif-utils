@@ -9,8 +9,8 @@ export default abstract class Reader {
 
     readonly exifUtil: ExifUtil;
     readonly dataType: DataType;
-    readonly propertiesInclude: string[] = [];
-    readonly propertiesExclude: string[] = [];
+    private readonly propertiesInclude: string[] = [];
+    private readonly propertiesExclude: string[] = [];
 
     /**
      * @param dataType - The format in which the data will be returned
@@ -60,6 +60,14 @@ export default abstract class Reader {
         if (!this.propertiesExclude.includes(property)) {
             this.propertiesExclude.push(property);
         }
+    }
+
+    public clearExcludedProperties(): void {
+        this.propertiesExclude.length = 0;
+    }
+
+    public clearIncludedProperties(): void {
+        this.propertiesInclude.length = 0;
     }
 
     /**
