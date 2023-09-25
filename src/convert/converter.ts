@@ -6,9 +6,25 @@ export default class Converter {
      * @param csv any string
      * @returns a json object. 
      */
-    static csvToJson(csv: string): Record<string, any>[] {
-        const lines = csv.trim().split('\n');
-        const [header, ...data] = lines.map(line => line.replace(/\r/g, '').split(',')); // Remove '\r'
+    static csvToJson(csv: string) {
+        const lines = csv.trim().split('\r\n');
+        const [header, ...data] = lines.map(line => {
+            if (!line.includes('"')) {
+                return line.split(',');
+            }
+            const singleQuoteString = line.split(/(?<!")"(?!")/);
+            const result = []
+            for (const text of singleQuoteString) {
+                if (text.includes('"')) {
+                    result.push(text)
+                } else {
+                    const arr = text.split(",")
+                    arr.splice(arr.indexOf(""), 1);
+                    result.push(...arr)
+                }
+            }
+            return result
+        });
         return data.map(row => {
             const obj: Record<string, any> = {};
             header.forEach((key, index) => {
@@ -19,7 +35,7 @@ export default class Converter {
                 }
             });
             return obj;
-        }).filter(row => Object.keys(row).length > 0); // Filter out rows with no properties
+        }).filter(row => Object.keys(row).length > 0);
     }
 
     /**
@@ -41,7 +57,7 @@ export default class Converter {
                 return item[key];
             });
             csvRows.push(row.join(','));
-        }); 
+        });
         // add an extra row to match the csv returned by exiftool     
         return csvRows.join('\r\n') + "\r\n";
     }

@@ -29,7 +29,8 @@ describe("conversion testing", () => {
             .readSync() as string;
 
         const jsonToCsv = Converter.jsonToCsv(json);
-        // compare csvToJson to original json
+        
+        // compare jsonToCsv to original json
         expect(jsonToCsv).toEqual(csv);
 
     })

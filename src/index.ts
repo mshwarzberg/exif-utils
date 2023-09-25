@@ -7,6 +7,7 @@ import os from 'os';
 import util from "util";
 import { execSync } from "child_process";
 import child_process from 'child_process';
+import Converter from "./convert/converter";
 
 export const execAsync = util.promisify(child_process.exec);
 export { execSync };
@@ -93,3 +94,5 @@ export class ExifUtil {
         return this.paths;
     }
 }
+
+export { Converter };
