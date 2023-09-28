@@ -17,7 +17,7 @@ export default class XMLReader extends Reader {
             const result: ProcessOutput = await execAsync(this.getCMD());
             return result.stdout;
         } catch (error: any) {
-            return this.getError(error);
+            return this.getErrorPlaceholder(error);
         }
     }
 
@@ -30,11 +30,11 @@ export default class XMLReader extends Reader {
             const result: string = execSync(this.getCMD()).toString();
             return result;
         } catch (error: any) {
-            return this.getError(error);
+            return this.getErrorPlaceholder(error);
         }
     }
 
-    private getError(error: any): string {
+    getErrorPlaceholder(error: any): string {
         return `<error><message>${error.message}</message><stack>${error.stack}</stack></error>`;
     }
 }

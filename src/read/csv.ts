@@ -20,7 +20,7 @@ export default class CSVReader extends Reader {
             const result = await execAsync(this.getCMD());
             return result.stdout;
         } catch (error: any) {
-            return "error," + error.message;
+            return this.getErrorPlaceholder(error);
         }
     }
 
@@ -32,7 +32,11 @@ export default class CSVReader extends Reader {
         try {
             return execSync(this.getCMD()).toString();
         } catch (error: any) {
-            return "error," + error.message;
+            return this.getErrorPlaceholder(error);
         }
+    }
+
+    public getErrorPlaceholder(error: any): string {
+        return `Error,Stack\r\n${error.message},${error.stack}`;
     }
 }

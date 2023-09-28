@@ -17,7 +17,7 @@ export default class DefaultReader extends Reader {
             const result: ProcessOutput = await execAsync(this.getCMD());
             return result.stdout;
         } catch (error: any) {
-            return `error: ${error.message}`;
+            return this.getErrorPlaceholder(error);
         }
     }
 
@@ -30,7 +30,11 @@ export default class DefaultReader extends Reader {
             const result: string = execSync(this.getCMD()).toString();
             return result;
         } catch (error: any) {
-            return `error: ${error.message}`;
+            return this.getErrorPlaceholder(error);
         }
+    }
+
+    getErrorPlaceholder(error: any): string {
+        return  `error: ${error.message}\r\nstack: ${error.stack}`;
     }
 }

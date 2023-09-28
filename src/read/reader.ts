@@ -35,7 +35,13 @@ export default abstract class Reader {
     * @returns An array of objects containing the extracted metadata or a string.
     */
     abstract readSync(): Record<string, any>[] | string;
-
+    
+    /**
+     * Subclasses must implement a way to get a message based on the datatype.
+     * @param error an error caused by read failure (most commonly reading invalid file paths)
+     */
+    abstract getErrorPlaceholder(error: any): Record<string, any>[] | string;
+    
     /**
     * Constructs the command string.
     * - Joins all file/folder paths with '" "' between each path in the array of {@link ExifUtil.paths}.

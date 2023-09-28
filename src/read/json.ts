@@ -3,7 +3,7 @@ import { DataType, ProcessOutput } from "../types";
 import Reader from "./reader";
 
 export default class JSONReader extends Reader {
-    
+
     constructor(exifUtil: ExifUtil) {
         super(exifUtil, DataType.JSON)
     }
@@ -17,7 +17,7 @@ export default class JSONReader extends Reader {
             const result: ProcessOutput = await execAsync(this.getCMD());
             return JSON.parse(result.stdout);
         } catch (error: any) {
-            return [{ error: error.message }];
+            return this.getErrorPlaceholder(error);
         }
     }
 
@@ -30,7 +30,11 @@ export default class JSONReader extends Reader {
             const result = execSync(this.getCMD()).toString();
             return JSON.parse(result);
         } catch (error: any) {
-            return [{ error: error.message }];
+            return this.getErrorPlaceholder(error);
         }
+    }
+
+    getErrorPlaceholder(error: any): Record<string, any>[] {
+        return [{ error: error.message, stack: error.stack }];
     }
 }

@@ -17,8 +17,7 @@ export default class HTMLReader extends Reader {
             const result: ProcessOutput = await execAsync(this.getCMD());
             return result.stdout;
         } catch (error: any) {
-            const errorResult: string = `<table><tr><td>error</td><td>${error.message}</td></tr></table>`;
-            return errorResult;
+            return this.getErrorPlaceholder(error);
         }
     }
 
@@ -31,8 +30,11 @@ export default class HTMLReader extends Reader {
             const result: string = execSync(this.getCMD()).toString();
             return result;
         } catch (error: any) {
-            const errorResult: string = `<table><tr><td>error</td><td>${error.message}</td></tr></table>`;
-            return errorResult;
+            return this.getErrorPlaceholder(error);
         }
+    }
+
+    getErrorPlaceholder(error: any): string {
+        return `<!-- Error --><table><tr><td>message</td><td>${error.message}</td></tr><<tr></tr><td>stack</td><td>${error.stack}</td></table>`;
     }
 }
