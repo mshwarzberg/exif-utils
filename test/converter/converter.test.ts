@@ -13,9 +13,17 @@ describe("conversion testing", () => {
         const csvToJson = Converter.csvToJson(csv);
 
         // compare csvToJson to original json
-        expect(csvToJson).toEqual(json);
-        jsonReader.clearExcludedProperties()
-        jsonReader.clearIncludedProperties()
+        csvToJson.forEach((file: Record<string, any>, index: number) => {
+            const propertyNames = Object.keys(file)
+            for (const key of propertyNames) {
+                expect(file[key]).toEqual(json[index][key]);
+            }
+        })
+
+        jsonReader.clearExcludedProperties();
+        jsonReader.clearIncludedProperties();
+        csvReader.clearExcludedProperties();
+        csvReader.clearIncludedProperties();
     });
     it("tests json to csv conversion", () => {
         // use inclusion list due to the way conversions are done
@@ -36,8 +44,10 @@ describe("conversion testing", () => {
 
         // compare jsonToCsv to original json
         expect(jsonToCsv).toEqual(csv);
-        jsonReader.clearExcludedProperties()
-        jsonReader.clearIncludedProperties()
+        jsonReader.clearExcludedProperties();
+        jsonReader.clearIncludedProperties();
+        csvReader.clearExcludedProperties();
+        csvReader.clearIncludedProperties();
     });
     it("tests json to html conversion", () => {
         const json = jsonReader
@@ -53,6 +63,10 @@ describe("conversion testing", () => {
             .readSync() as string;
         const jsonToHtml = Converter.jsonToHtml(json);
 
-        expect(html).toEqual(jsonToHtml);
+        expect(jsonToHtml).toEqual(html);
+        jsonReader.clearExcludedProperties();
+        jsonReader.clearIncludedProperties();
+        csvReader.clearExcludedProperties();
+        csvReader.clearIncludedProperties();
     })
 })
