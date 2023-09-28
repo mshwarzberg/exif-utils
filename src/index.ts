@@ -8,6 +8,7 @@ import util from "util";
 import { execSync } from "child_process";
 import child_process from 'child_process';
 import Converter from "./convert/converter";
+import XMLReader from "./read/xml";
 
 export const execAsync = util.promisify(child_process.exec);
 export { execSync };
@@ -76,6 +77,13 @@ export class ExifUtil {
      */
     public defaultReader(): DefaultReader {
         return new DefaultReader(this);
+    }
+
+    /**
+     * @returns a new instance of {@link XMLReader}
+     */
+    public xmlReader(): XMLReader {
+        return new XMLReader(this);
     }
 
     /**

@@ -28,8 +28,8 @@ export enum DataType {
     JSON = "-j",
     HTML = "-h",
     CSV = "-csv",
-    // These three are currently not supported
-    XML = "-x",
+    XML = "-X",
+    // These two are currently not supported
     PHP = "-php",
     TSV = "-t"
 }
