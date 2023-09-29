@@ -2,6 +2,9 @@ import { ExifUtil, execAsync, execSync } from "..";
 import { DataType, ProcessOutput } from "../types";
 import Reader from "./reader";
 
+/**
+ * @alert This class will not return the file path (SourceFile) in the output unless explicitly selected.
+ */
 export default class DefaultReader extends Reader {
 
     constructor(exifUtil: ExifUtil) {

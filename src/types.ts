@@ -33,3 +33,11 @@ export enum DataType {
     PHP = "-php",
     TSV = "-t"
 }
+
+export enum FileType {
+    IMAGE,
+    ARCHIVE,
+    DOCUMENT,
+    VIDEO,
+    DEFAULT
+}

@@ -1,16 +1,21 @@
 import { ExifUtil } from "..";
 import { DataType } from "../types";
+import ArchivePropertyBuilder from "./file-types/archive";
+import DocumentPropertyBuilder from "./file-types/document";
 import FilePropertyBuilder from "./file-types/file";
+import ImagePropertyBuilder from "./file-types/image";
+import VideoPropertyBuilder from "./file-types/video";
 
 /**
- * All the functions that begin with "with" are for properties that are shared by all files 
- * If a property is both selected and unselected it will be included in the result.
+ * The base class for all reading of metadata. If {@link readSync} or {@link @readAsync} 
+ * is called without setting any properties, all properties will be read.
+ * To read specific properties use {@link filePropertyBuilder} field to select the appropriate properties.
  */
 export default abstract class Reader {
 
     readonly exifUtil: ExifUtil;
     readonly dataType: DataType;
-    filePropertyBuilder = new FilePropertyBuilder();
+    private filePropertyBuilder = new FilePropertyBuilder();
 
     /**
      * @param dataType - The format in which the data will be returned
@@ -51,14 +56,39 @@ export default abstract class Reader {
     */
     protected getCMD(): string {
         const concatPaths = `${this.exifUtil.getPaths().join('" "')}`;
-        const propertiesInclude = this.filePropertyBuilder.getPropertiesInclude();
-        const propertiesExclude = this.filePropertyBuilder.getPropertiesExclude();
-        let includedProperties = propertiesInclude.map(property => `-${property} `).join("");
-        let excludedProperties = propertiesExclude.map(property => `--${property} `).join("");
+        let propertiesInclude: string[], propertiesExclude: string[];
+        if (this.filePropertyBuilder === null) {
+            propertiesExclude = []
+            propertiesInclude = []
+        } else {
+            propertiesInclude = this.filePropertyBuilder.getPropertiesInclude();
+            propertiesExclude = this.filePropertyBuilder.getPropertiesExclude();
+        }
+        const includedProperties = propertiesInclude.map(property => `-${property} `).join("");
+        const excludedProperties = propertiesExclude.map(property => `--${property} `).join("");
         return `"${ExifUtil.exifToolPath}" ${this.dataType} -q ${includedProperties} ${excludedProperties} "${concatPaths}"`;
     }
 
+    /**
+     * After reading from a file, reset the builder to its default value (clearing the selected/unselected properties).
+     */
     public resetPropertyBuilder(): void {
         this.filePropertyBuilder = new FilePropertyBuilder();
+    }
+
+    public archivePropertyBuilder(): ArchivePropertyBuilder {
+        return this.filePropertyBuilder = new ArchivePropertyBuilder();
+    }
+
+    public documentPropertyBuilder(): DocumentPropertyBuilder {
+        return this.filePropertyBuilder = new DocumentPropertyBuilder();
+    }
+
+    public imagePropertyBuilder(): ImagePropertyBuilder {
+        return this.filePropertyBuilder = new ImagePropertyBuilder();
+    }
+
+    public videoPropertyBuilder(): VideoPropertyBuilder {
+        return this.filePropertyBuilder = new VideoPropertyBuilder();
     }
 }

@@ -1,3 +1,8 @@
+/**
+ * The class used to set properties that are to be included or excluded.
+ * If the file type of the file being read is known use the appropriate subclass.
+ * Otherwise, use {@link withProperties} to select any property by name
+ */
 export default class FilePropertyBuilder {
 
     private readonly propertiesInclude: string[] = [];
