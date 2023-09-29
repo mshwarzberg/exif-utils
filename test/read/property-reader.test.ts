@@ -5,12 +5,12 @@ describe("Test whether the correct properties are returned and in the correct da
         const jsonReader = exifUtil.jsonReader();
         // select the properties you want. Duplicates should be ignored
         jsonReader
+            .filePropertyBuilder
             .withFileName()
             .withFileSize()
             .withFileType()
             .withFileName();
 
-        // validate that there are 3 selected properties
         // read the data
         const json = jsonReader.readSync();
 
@@ -37,6 +37,7 @@ describe("Test whether the correct properties are returned and in the correct da
     it("tests exclusion of properties", () => {
         const jsonReader = exifUtil.jsonReader();
         jsonReader
+            .filePropertyBuilder
             .withoutFileSize()
             .withoutMIMEType()
             .withoutDirectory();

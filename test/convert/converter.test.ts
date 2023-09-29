@@ -8,8 +8,10 @@ describe("conversion testing", () => {
 
     it("tests csv to json conversion", () => {
         // remove last access because there are issues with the value being different
-        const json = jsonReader.withoutLastAccessed().readSync() as Record<string, any>[];
-        const csv = csvReader.withoutLastAccessed().readSync() as string;
+        jsonReader.filePropertyBuilder.withoutLastAccessed();
+        csvReader.filePropertyBuilder.withoutLastAccessed();
+        const json = jsonReader.readSync() as Record<string, any>[];
+        const csv = csvReader.readSync() as string;
         const csvToJson = Converter.csvToJson(csv);
 
         // compare csvToJson to original json
@@ -20,53 +22,54 @@ describe("conversion testing", () => {
             }
         })
 
-        jsonReader.clearExcludedProperties();
-        jsonReader.clearIncludedProperties();
-        csvReader.clearExcludedProperties();
-        csvReader.clearIncludedProperties();
+        jsonReader.filePropertyBuilder.clearExcludedProperties();
+        jsonReader.filePropertyBuilder.clearIncludedProperties();
+        csvReader.filePropertyBuilder.clearExcludedProperties();
+        csvReader.filePropertyBuilder.clearIncludedProperties();
     });
     it("tests json to csv conversion", () => {
         // use inclusion list due to the way conversions are done
-        const json = jsonReader
-            .withFilePath()
+        jsonReader
+            .filePropertyBuilder.withFilePath()
             .withFileName()
             .withFilePermissions()
             .withDirectory()
-            .readSync() as Record<string, any>[];
-        const csv = csvReader
-            .withFilePath()
+        const json = jsonReader.readSync() as Record<string, any>[];
+        csvReader
+            .filePropertyBuilder.withFilePath()
             .withFileName()
             .withFilePermissions()
             .withDirectory()
-            .readSync() as string;
+        const csv = csvReader.readSync() as string;
 
         const jsonToCsv = Converter.jsonToCsv(json);
 
         // compare jsonToCsv to original json
         expect(jsonToCsv).toEqual(csv);
-        jsonReader.clearExcludedProperties();
-        jsonReader.clearIncludedProperties();
-        csvReader.clearExcludedProperties();
-        csvReader.clearIncludedProperties();
+        jsonReader.filePropertyBuilder.clearExcludedProperties();
+        jsonReader.filePropertyBuilder.clearIncludedProperties();
+        csvReader.filePropertyBuilder.clearExcludedProperties();
+        csvReader.filePropertyBuilder.clearIncludedProperties();
     });
     it("tests json to html conversion", () => {
-        const json = jsonReader
+        jsonReader
+            .filePropertyBuilder
             .withFileName()
             .withFileSize()
             .withFilePath()
-            .readSync() as Record<string, any>[];
-        const html = htmlReader
-            .withFilePath()
+        const json = jsonReader.readSync() as Record<string, any>[];
+        htmlReader
+            .filePropertyBuilder.withFilePath()
             .withFileName()
             .withFileSize()
             .withFilePath()
-            .readSync() as string;
+        const html = htmlReader.readSync() as string;
         const jsonToHtml = Converter.jsonToHtml(json);
 
         expect(jsonToHtml).toEqual(html);
-        jsonReader.clearExcludedProperties();
-        jsonReader.clearIncludedProperties();
-        csvReader.clearExcludedProperties();
-        csvReader.clearIncludedProperties();
+        jsonReader.filePropertyBuilder.clearExcludedProperties();
+        jsonReader.filePropertyBuilder.clearIncludedProperties();
+        csvReader.filePropertyBuilder.clearExcludedProperties();
+        csvReader.filePropertyBuilder.clearIncludedProperties();
     })
 })
