@@ -11,7 +11,7 @@ module.exports = {
 		'env': {
 			'node': true,
 		},
-		'files': ['.eslintrc.{js,cjs}', '*.ts'],
+		'files': ['.eslintrc.{js,cjs}'],
 		'parserOptions': {
 			'sourceType': 'script',
 		},
@@ -28,7 +28,6 @@ module.exports = {
 		'no-console': 'error',
 		'quotes': ['error', 'single'],
 		'indent': ['error', 'tab'],
-		'no-mixed-spaces-and-tabs': 'off',
 		'array-element-newline': [
 			'error',
 			{
@@ -53,5 +52,8 @@ module.exports = {
 		'block-spacing': ['error', 'always'],
 		'array-bracket-spacing': ['error', 'never'],
 		'space-in-parens': ['error', 'never'],
+		'newline-per-chained-call': ['error', { ignoreChainWithDepth: 2 }],
+		'template-curly-spacing': ['error', 'never'],
+		'max-params': ['error', 3],
 	},
 };

@@ -1,4 +1,7 @@
-export const preset = 'ts-jest';
-export const testEnvironment = 'node';
-export const moduleFileExtensions = ['ts', 'tsx', 'js', 'jsx', 'json', 'node'];
-export const testMatch = ['**/*.test.ts'];
+/* eslint-disable no-undef */
+module.exports = {
+	preset: 'ts-jest',
+	testEnvironment: 'node',
+	moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+	testMatch: ['**/*.test.ts'],
+};

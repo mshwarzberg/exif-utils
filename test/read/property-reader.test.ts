@@ -1,11 +1,16 @@
+import JSONReader from '../../src/read/data-types/json';
 import { exifUtil } from '../values';
 
 describe('Test whether the correct properties are returned and in the correct data type', () => {
+	let jsonReader: JSONReader;
+
+	beforeEach(() => {
+		jsonReader = exifUtil.jsonReader();
+	});
+
 	it('tests inclusion of properties', () => {
-		const jsonReader = exifUtil.jsonReader();
 		// select the properties you want. Duplicates should be ignored
-		jsonReader
-			.getFilePropertyBuilder()
+		jsonReader.getFilePropertyBuilder()
 			.withFileName()
 			.withFileSize()
 			.withFileType()
@@ -16,28 +21,32 @@ describe('Test whether the correct properties are returned and in the correct da
 
 		// validate the json output
 		json.forEach((file) => {
-			expect(file).toHaveProperty('FileName');
-			expect(file).toHaveProperty('FileType');
-			expect(file).toHaveProperty('FileSize');
+			expect(file)
+				.toHaveProperty('FileName');
+			expect(file)
+				.toHaveProperty('FileType');
+			expect(file)
+				.toHaveProperty('FileSize');
 			const numProperties = Object.keys(file).length;
 			// include the SourceFile property.
-			expect(numProperties).toBe(4);
+			expect(numProperties)
+				.toBe(4);
 		});
 	});
+
 	it('tests empty property reader', () => {
-		const jsonReader = exifUtil.jsonReader();
-		const json = jsonReader.readSync() as Record<string, unknown>[];
+		const json = jsonReader.readSync();
 		json.forEach((file) => {
 			expect(file).toHaveProperty('SourceFile');
 			const numProperties = Object.keys(file).length;
 			// there are 10 base properties for all files
-			expect(numProperties).toBeGreaterThan(10);
+			expect(numProperties)
+				.toBeGreaterThan(10);
 		});
 	});
+
 	it('tests exclusion of properties', () => {
-		const jsonReader = exifUtil.jsonReader();
-		jsonReader
-			.getFilePropertyBuilder()
+		jsonReader.getFilePropertyBuilder()
 			.withoutFileSize()
 			.withoutMIMEType()
 			.withoutDirectory();

@@ -1,5 +1,10 @@
-import FilePropertyBuilder from './file-types/file';
+import FilePropertyBuilder from './file';
 
+/**
+ * This class can me used for any type of media. However, if the
+ * file type being read is an image or video, use {@link ImagePropertyBuilder}
+ * or {@link VideoPropertyBuilder}
+ */
 export default class MediaPropertyBuilder extends FilePropertyBuilder {
 	public withImageWidth(): this {
 		this.withProperties('ImageWidth');

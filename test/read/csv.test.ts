@@ -15,6 +15,7 @@ describe('tests the csv reader', () => {
 		const pngResult = await csvReader.readAsync();
 		expect(pngResult.match(errorRegex)).not.toBeTruthy();
 	});
+
 	it('should fail to read csv synchronously', () => {
 		csvReader = exifUtil.csvReader();
 		exifUtil.setPaths(invalidTestPath);

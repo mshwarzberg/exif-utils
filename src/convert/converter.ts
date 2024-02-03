@@ -1,10 +1,10 @@
 export default class Converter {
 	/**
-   * If there are an odd amount of double quotes in a string inside the csv the conversion will fail.
-   * @note this removes blank properties from the csv
-   * @param csv any string
-   * @returns a json object.
-   */
+     * If there are an odd amount of double quotes in a string inside the csv the conversion will fail.
+     * @note this removes blank properties from the csv
+     * @param csv any string
+     * @returns a json object.
+     */
 	static csvToJson(csvString: string) {
 		const files = csvString.split('\r\n');
 		const result = [];
@@ -17,7 +17,7 @@ export default class Converter {
 			// if a line is empty go to the next one and don't add it to the result
 			if (file === '') continue;
 			// this holds the metadata. The values are kept by their index.
-			const data: string[] = [];
+			const data: Array<string> = [];
 			let isQuoted: boolean = false;
 			let property: string = '';
 
@@ -59,9 +59,9 @@ export default class Converter {
 				// ignore empty values and the warning message
 				if (value !== '' && key !== 'Warning') {
 					obj[key] =
-            !isNaN(parseFloat(value)) && /^[0-9.]+$/.test(value)
-            	? parseFloat(value)
-            	: value;
+					!isNaN(parseFloat(value)) && /^[0-9.]+$/.test(value)
+						? parseFloat(value)
+						: value;
 				}
 			}
 			result.push(obj);
@@ -71,10 +71,10 @@ export default class Converter {
 	}
 
 	/**
-   * An extra line is added to the end of the csv to match the exiftool csv
-   * @param json any json object that is an array of objects
-   * @returns a csv string
-   */
+     * An extra line is added to the end of the csv to match the exiftool csv
+     * @param json any json object that is an array of objects
+     * @returns a csv string
+     */
 	static jsonToCsv(json: Array<Record<string, unknown>>): string {
 		if (json.length === 0) {
 			return '';

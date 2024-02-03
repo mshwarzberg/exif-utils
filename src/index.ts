@@ -34,74 +34,77 @@ validateOS();
  */
 export class ExifUtil {
 	/**
-   * If any one of the paths are invalid, extraction of metadata will fail.
-   */
-	private paths: string[];
+     * If any one of the paths are invalid, extraction of metadata will fail.
+     */
+	private paths: Array<string>;
 
 	/**
-   * The absolute path representation of exiftool location.
-   */
+     * The absolute path representation of exiftool location.
+     */
 	static exifToolPath: string = path.join(
 		__dirname,
 		'../resources/exiftool.exe',
 	);
 
 	/**
-   * @note paths can be overridden by using {@link setPaths}
-   * @param paths any number of files or folders to be read
-   */
-	constructor(...paths: string[]) {
+     * @note paths can be overridden by using {@link setPaths}
+     * @param paths any number of files or folders to be read
+     */
+	constructor(...paths: Array<string>) {
+		if (paths.length === 0) {
+			throw new Error('At least one path must be provided.');
+		}
 		this.paths = paths;
 	}
 
 	/**
-   * @returns a new instance of {@link JSONReader}
-   */
+     * @returns a new instance of {@link JSONReader}
+     */
 	public jsonReader(): JSONReader {
 		return new JSONReader(this);
 	}
 
 	/**
-   * @returns a new instance of {@link CSVReader}
-   */
+     * @returns a new instance of {@link CSVReader}
+     */
 	public csvReader(): CSVReader {
 		return new CSVReader(this);
 	}
 
 	/**
-   * @returns a new instance of {@link HTMLReader}
-   */
+     * @returns a new instance of {@link HTMLReader}
+     */
 	public htmlReader(): HTMLReader {
 		return new HTMLReader(this);
 	}
 
 	/**
-   * @returns a new instance of {@link DefaultReader}
-   */
+     * @returns a new instance of {@link DefaultReader}
+     */
 	public defaultReader(): DefaultReader {
 		return new DefaultReader(this);
 	}
 
 	/**
-   * @returns a new instance of {@link XMLReader}
-   */
+     * @returns a new instance of {@link XMLReader}
+     */
 	public xmlReader(): XMLReader {
 		return new XMLReader(this);
 	}
 
 	/**
-   * This will update the {@link paths} of the instance of {@link ExifUtil}
-   * This is more preferable than creating a new instance entirely in the case of updating the paths.
-   * @param paths a list of paths that are to be scanned.
-   */
-	public setPaths(...paths: string[]): void {
+     * This will update the {@link paths} of the instance of {@link ExifUtil}
+     * This is more preferable than creating a new instance entirely in the case of updating the paths.
+     * @param paths a list of paths that are to be scanned.
+     */
+	public setPaths(...paths: Array<string>): void {
 		this.paths = paths;
 	}
 
 	/**
-   * @returns {string[]} The array of files/folders {@link paths} to extract metadata from.
-   */
-	public getPaths(): string[] {
+     * @returns {Array<string>} The array of files/folders {@link paths} to extract metadata from.
+     */
+	public getPaths(): Array<string> {
 		return this.paths;
 	}
 }

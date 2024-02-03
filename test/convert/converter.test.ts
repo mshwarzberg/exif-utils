@@ -6,12 +6,19 @@ describe('conversion testing', () => {
 	const jsonReader = exifUtil.jsonReader();
 	const htmlReader = exifUtil.htmlReader();
 
+	afterEach(() => {
+		jsonReader.getFilePropertyBuilder().clearExcludedProperties();
+		jsonReader.getFilePropertyBuilder().clearIncludedProperties();
+		csvReader.getFilePropertyBuilder().clearExcludedProperties();
+		csvReader.getFilePropertyBuilder().clearIncludedProperties();
+	});
+
 	it('tests csv to json conversion', () => {
 		// remove last access because there are issues with the value being different
 		jsonReader.getFilePropertyBuilder().withoutLastAccessed();
 		csvReader.getFilePropertyBuilder().withoutLastAccessed();
-		const json = jsonReader.readSync() as Record<string, unknown>[];
-		const csv = csvReader.readSync() as string;
+		const json = jsonReader.readSync();
+		const csv = csvReader.readSync();
 		const csvToJson = Converter.csvToJson(csv);
 
 		// compare csvToJson to original json
@@ -21,9 +28,8 @@ describe('conversion testing', () => {
 				expect(file[key]).toEqual(json[index][key]);
 			}
 		});
-
-		clearProperties();
 	});
+
 	it('tests json to csv conversion', () => {
 		// use inclusion list due to the way conversions are done
 		jsonReader
@@ -32,45 +38,37 @@ describe('conversion testing', () => {
 			.withFileName()
 			.withFilePermissions()
 			.withDirectory();
-		const json = jsonReader.readSync() as Record<string, unknown>[];
+		const json = jsonReader.readSync();
 		csvReader
 			.getFilePropertyBuilder()
 			.withFilePath()
 			.withFileName()
 			.withFilePermissions()
 			.withDirectory();
-		const csv = csvReader.readSync() as string;
+		const csv = csvReader.readSync();
 
 		const jsonToCsv = Converter.jsonToCsv(json);
 
 		// compare jsonToCsv to original json
 		expect(jsonToCsv).toEqual(csv);
-		clearProperties();
 	});
+
 	it('tests json to html conversion', () => {
 		jsonReader
 			.getFilePropertyBuilder()
 			.withFileName()
 			.withFileSize()
 			.withFilePath();
-		const json = jsonReader.readSync() as Record<string, unknown>[];
+		const json = jsonReader.readSync();
 		htmlReader
 			.getFilePropertyBuilder()
 			.withFilePath()
 			.withFileName()
 			.withFileSize()
 			.withFilePath();
-		const html = htmlReader.readSync() as string;
+		const html = htmlReader.readSync();
 		const jsonToHtml = Converter.jsonToHtml(json);
 
 		expect(jsonToHtml).toEqual(html);
-		clearProperties();
 	});
-
-	function clearProperties(): void {
-		jsonReader.getFilePropertyBuilder().clearExcludedProperties();
-		jsonReader.getFilePropertyBuilder().clearIncludedProperties();
-		csvReader.getFilePropertyBuilder().clearExcludedProperties();
-		csvReader.getFilePropertyBuilder().clearIncludedProperties();
-	}
 });
