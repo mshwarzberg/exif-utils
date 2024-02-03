@@ -1,3 +1,3 @@
-describe("do nothing", () => {
-    it("should", () => { })
-})
+describe('do nothing', () => {
+	it('should', () => { });
+});

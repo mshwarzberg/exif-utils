@@ -1,23 +1,5 @@
-import FilePropertyBuilder from "./file";
+import MediaPropertyBuilder from '../media';
 
-export default class ImagePropertyBuilder extends FilePropertyBuilder {
-    public withImageWidth(): ImagePropertyBuilder {
-        this.withProperties("ImageWidth");
-        return this;
-    }
-    
-    public withImageHeight(): ImagePropertyBuilder {
-        this.withProperties("ImageHeight");
-        return this;
-    }
-    
-    public withImageSize(): ImagePropertyBuilder {
-        this.withProperties("ImageSize");
-        return this;
-    }
-    
-    public withMegapixels(): ImagePropertyBuilder {
-        this.withProperties("Megapixels");
-        return this;
-    }
+export default class ImagePropertyBuilder extends MediaPropertyBuilder {
+
 }
