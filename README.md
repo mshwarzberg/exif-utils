@@ -10,7 +10,7 @@ Please note that as of now, ExifUtil is compatible with the Windows operating sy
 
 ## Installation
 
-You can easily install ExifUtil in your Node.js project using npm:
+Install ExifUtil in your Node.js project using npm:
 
 ```bash
 npm install exif-utils
@@ -28,7 +28,7 @@ import { ExifUtils } from "exif-utils";
 
 const exifUtil = new ExifUtils("path/to/your/file");
 const JSONReader = exifUtil.jsonReader();
-const json = JSONReader.readSync(); // or JSONReader.readAsync();
+const json = JSONReader.executeSync(); // or JSONExecutableCommand.executeAsync();
 // Perform operations with the extracted JSON data
 ```
 

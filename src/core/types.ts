@@ -29,7 +29,8 @@ export enum FileType {
 }
 
 /**
- * DO NOT USE FOR ANYTHING OTHER THAN CATCH BLOCKS.
+ * DO NOT USE FOR ANYTHING OTHER THAN CATCH BLOCKS OR ERROR HANDLING.
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Err = any;
+

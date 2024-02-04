@@ -1,4 +1,4 @@
-import HTMLReader from '../../src/read/data-types/html';
+import HTMLReader from '../../src/metadata-read/data-types/html-reader';
 import { exifUtil, invalidTestPath, testPath } from '../values';
 
 describe('tests the html reader', () => {
@@ -6,21 +6,21 @@ describe('tests the html reader', () => {
 	let htmlReader: HTMLReader;
 	it('should read html synchronously', () => {
 		htmlReader = exifUtil.htmlReader();
-		const result = htmlReader.readSync();
+		const result = htmlReader.executeSync();
 
 		expect(result.match(errorRegex)).not.toBeTruthy();
 	});
 
 	it('should read html asynchronously', async () => {
 		htmlReader = exifUtil.htmlReader();
-		const result = await htmlReader.readAsync();
+		const result = await htmlReader.executeAsync();
 		expect(result.match(errorRegex)).not.toBeTruthy();
 	});
 
 	it('should fail to read html synchronously', () => {
 		htmlReader = exifUtil.htmlReader();
 		exifUtil.setPaths(invalidTestPath);
-		const result = htmlReader.readSync();
+		const result = htmlReader.executeSync();
 
 		expect(result.match(errorRegex)).toBeTruthy();
 		exifUtil.setPaths(testPath);
@@ -30,7 +30,7 @@ describe('tests the html reader', () => {
 		htmlReader = exifUtil.htmlReader();
 		exifUtil.setPaths(invalidTestPath);
 
-		const result = await htmlReader.readAsync();
+		const result = await htmlReader.executeAsync();
 		expect(result.match(errorRegex)).toBeTruthy();
 		exifUtil.setPaths(testPath);
 	});

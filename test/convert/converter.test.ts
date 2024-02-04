@@ -17,8 +17,8 @@ describe('conversion testing', () => {
 		// remove last access because there are issues with the value being different
 		jsonReader.getFilePropertyBuilder().withoutLastAccessed();
 		csvReader.getFilePropertyBuilder().withoutLastAccessed();
-		const json = jsonReader.readSync();
-		const csv = csvReader.readSync();
+		const json = jsonReader.executeSync();
+		const csv = csvReader.executeSync();
 		const csvToJson = Converter.csvToJson(csv);
 
 		// compare csvToJson to original json
@@ -38,14 +38,14 @@ describe('conversion testing', () => {
 			.withFileName()
 			.withFilePermissions()
 			.withDirectory();
-		const json = jsonReader.readSync();
+		const json = jsonReader.executeSync();
 		csvReader
 			.getFilePropertyBuilder()
 			.withFilePath()
 			.withFileName()
 			.withFilePermissions()
 			.withDirectory();
-		const csv = csvReader.readSync();
+		const csv = csvReader.executeSync();
 
 		const jsonToCsv = Converter.jsonToCsv(json);
 
@@ -59,14 +59,14 @@ describe('conversion testing', () => {
 			.withFileName()
 			.withFileSize()
 			.withFilePath();
-		const json = jsonReader.readSync();
+		const json = jsonReader.executeSync();
 		htmlReader
 			.getFilePropertyBuilder()
 			.withFilePath()
 			.withFileName()
 			.withFileSize()
 			.withFilePath();
-		const html = htmlReader.readSync();
+		const html = htmlReader.executeSync();
 		const jsonToHtml = Converter.jsonToHtml(json);
 
 		expect(jsonToHtml).toEqual(html);

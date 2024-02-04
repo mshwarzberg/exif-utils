@@ -1,14 +1,16 @@
-import CSVReader from './read/data-types/csv';
-import DefaultReader from './read/data-types/default';
-import HTMLReader from './read/data-types/html';
-import JSONReader from './read/data-types/json';
+import CSVReader from './metadata-read/data-types/csv-reader';
+import DefaultReader from './metadata-read/data-types/default-reader';
+import HTMLReader from './metadata-read/data-types/html-reader';
+import JSONReader from './metadata-read/data-types/json-reader';
 import path from 'path';
 import os from 'os';
 import util from 'util';
 import child_process, { execSync } from 'child_process';
-
-import Converter from './convert/converter';
-import XMLReader from './read/data-types/xml';
+import XMLReader from  './metadata-read/data-types/xml-reader';
+import Writer from './write/writer';
+import InfoJSON from './general/data-types/json-info';
+import { DataType } from './core/types';
+import InfoReader from './general/info-reader';
 
 export const execAsync = util.promisify(child_process.exec);
 export { execSync };
@@ -41,12 +43,13 @@ export class ExifUtil {
 	/**
      * The absolute path representation of exiftool location.
      */
-	static exifToolPath: string = path.join(
+	private static exifToolPath: string = path.join(
 		__dirname,
 		'../resources/exiftool.exe',
 	);
 
 	/**
+	 * @throws an error if no paths are provided
      * @note paths can be overridden by using {@link setPaths}
      * @param paths any number of files or folders to be read
      */
@@ -92,12 +95,24 @@ export class ExifUtil {
 		return new XMLReader(this);
 	}
 
+	public jsonInfo(): InfoJSON {
+		return new InfoJSON(this);
+	}
+
+	public writer(): Writer {
+		return new Writer(this);
+	}
+
 	/**
      * This will update the {@link paths} of the instance of {@link ExifUtil}
      * This is more preferable than creating a new instance entirely in the case of updating the paths.
-     * @param paths a list of paths that are to be scanned.
+     * @throws an error if no paths are provided
+	 * @param paths a list of paths that are to be scanned.
      */
 	public setPaths(...paths: Array<string>): void {
+		if (paths.length === 0) {
+			throw new Error('At least one path must be provided.');
+		}
 		this.paths = paths;
 	}
 
@@ -107,6 +122,33 @@ export class ExifUtil {
 	public getPaths(): Array<string> {
 		return this.paths;
 	}
+
+	public static getExiftoolPath(): string {
+		return this.exifToolPath;
+	}
+
+	public getVersionSync(): string {
+		return new VersionReader(this, DataType.DEFAULT).getVersionSync();
+	}
+
+	public async getVersionAsync(): Promise<string> {
+		return new VersionReader(this, DataType.DEFAULT).getVersionAsync();
+	}
+
 }
 
-export { Converter };
+/**
+ * designed to only get version from the main {@link ExifUtil} class
+ */
+class VersionReader extends InfoReader {
+
+	public getVersionSync(): string {
+		this.command = `${ExifUtil.getExiftoolPath()} -ver`;
+		return this.executeSync();
+	}
+
+	public async getVersionAsync(): Promise<string> {
+		this.command = `${ExifUtil.getExiftoolPath()} -ver`;
+		return this.executeAsync();
+	}
+}

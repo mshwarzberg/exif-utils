@@ -1,4 +1,4 @@
-import JSONReader from '../../src/read/data-types/json';
+import JSONReader from '../../src/metadata-read/data-types/json-reader';
 import { exifUtil } from '../values';
 
 describe('Test whether the correct properties are returned and in the correct data type', () => {
@@ -17,16 +17,13 @@ describe('Test whether the correct properties are returned and in the correct da
 			.withFileName();
 
 		// read the data
-		const json = jsonReader.readSync();
+		const json = jsonReader.executeSync();
 
 		// validate the json output
 		json.forEach((file) => {
-			expect(file)
-				.toHaveProperty('FileName');
-			expect(file)
-				.toHaveProperty('FileType');
-			expect(file)
-				.toHaveProperty('FileSize');
+			expect(file).toHaveProperty('FileName');
+			expect(file).toHaveProperty('FileType');
+			expect(file).toHaveProperty('FileSize');
 			const numProperties = Object.keys(file).length;
 			// include the SourceFile property.
 			expect(numProperties)
@@ -35,7 +32,7 @@ describe('Test whether the correct properties are returned and in the correct da
 	});
 
 	it('tests empty property reader', () => {
-		const json = jsonReader.readSync();
+		const json = jsonReader.executeSync();
 		json.forEach((file) => {
 			expect(file).toHaveProperty('SourceFile');
 			const numProperties = Object.keys(file).length;
@@ -50,7 +47,7 @@ describe('Test whether the correct properties are returned and in the correct da
 			.withoutFileSize()
 			.withoutMIMEType()
 			.withoutDirectory();
-		const json = jsonReader.readSync();
+		const json = jsonReader.executeSync();
 		json.forEach((file) => {
 			expect(file).not.toHaveProperty('FileSize');
 			expect(file).not.toHaveProperty('MIMEType');

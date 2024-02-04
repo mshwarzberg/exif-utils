@@ -1,5 +1,3 @@
-import { Err } from './types';
-
 /**
  * Interface representing the output of a child process execution.
  * This provides a generic structure for capturing both standard output (stdout) and standard error (stderr) streams.
@@ -12,8 +10,4 @@ import { Err } from './types';
 export interface ProcessOutput {
 	stdout: string;
 	stderr: string;
-}
-
-export interface ErrorPlaceholder {
-	getErrorPlaceholder(error: Err): Array<Record<string, unknown>> | string;
 }
