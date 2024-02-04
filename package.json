@@ -1,9 +1,9 @@
 {
   "name": "exif-utils",
-  "version": "0.1.8",
+  "version": "0.1.81",
   "description": "This library is designed to read and write exif data to compatible files",
   "main": "dist/exif-utils.js",
-  "types": "index.d.ts",
+  "types": "*.d.ts",
   "scripts": {
     "prebuild": "rimraf dist",
     "test": "jest",
